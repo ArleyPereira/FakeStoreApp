@@ -1,14 +1,14 @@
 package domain.usecase
 
 import data.model.ProductResponse
-import data.repository.HomeRepository
+import domain.repository.HomeRepository
 import kotlinx.coroutines.flow.Flow
 
 class GetProductsUseCase(
     private val repository: HomeRepository
 ) {
 
-    operator fun invoke(): Flow<List<ProductResponse>> {
+    suspend operator fun invoke(): Flow<List<ProductResponse>> {
         return repository.getProducts()
     }
 

@@ -1,12 +1,13 @@
 package di
 
-import data.repository.HomeRepository
+import data.repository.HomeRepositoryImpl
+import domain.repository.HomeRepository
 import org.koin.dsl.module
 
 val dataModule = module {
 
-    single {
-        HomeRepository(httpClient = get())
+    single<HomeRepository> {
+        HomeRepositoryImpl(httpClient = get())
     }
 
 }

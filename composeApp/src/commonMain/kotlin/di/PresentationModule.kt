@@ -1,12 +1,12 @@
 package di
 
-import HomeViewModel
+import presenter.products.viewmodel.ProductsViewModel
 import org.koin.dsl.module
 
 val presentationModule = module {
 
     single {
-        HomeViewModel(getProductsUseCase = get())
+        ProductsViewModel(getProductsUseCase = get())
     }
 
 }

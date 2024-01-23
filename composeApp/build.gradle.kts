@@ -38,14 +38,16 @@ kotlin {
             // Ktor
             implementation(libs.ktor.client.android)
 
-            implementation(project.dependencies.platform("io.insert-koin:koin-bom:3.5.3"))
-            implementation("io.insert-koin:koin-core")
-            implementation("io.insert-koin:koin-android")
-            implementation("io.insert-koin:koin-androidx-compose")
+            // Koin
+            implementation(project.dependencies.platform(libs.koin.bom))
+            implementation(libs.koin.core)
+            implementation(libs.koin.androidx.compose)
+            implementation(libs.koin.android)
         }
 
         iosMain.dependencies {
-            implementation("io.ktor:ktor-client-darwin:2.3.5")
+            // Ktor
+            implementation(libs.ktor.client.darwin)
         }
 
         commonMain.dependencies {
@@ -60,6 +62,7 @@ kotlin {
             implementation(libs.kotlinx.serialization.json)
             implementation(libs.kotlinx.coroutines.core)
 
+            // Ktor
             implementation(libs.ktor.client.core)
             implementation(libs.ktor.client.content.negotiation)
             implementation(libs.ktor.serialization.kotlinx.json)
@@ -67,24 +70,19 @@ kotlin {
             implementation(libs.mvvm.core)
 
             // Kamel
-            implementation("media.kamel:kamel-image:0.9.1")
+            implementation(libs.kamel.image)
 
             // Koin
-            implementation(project.dependencies.platform("io.insert-koin:koin-bom:3.5.3"))
-            implementation("io.insert-koin:koin-core")
-            implementation("io.insert-koin:koin-compose")
+            implementation(project.dependencies.platform(libs.koin.bom))
+            implementation(libs.koin.core)
+            implementation(libs.koin.compose)
 
-            // Required so we can access the generated KSP files
-            //kotlin.srcDir("build/generated/ksp/metadata/commonMain/kotlin")
-
-            // Only required if you want to use koin annotations
-            implementation("io.insert-koin:koin-annotations:1.3.0")
+            // Kermit Log
+            implementation(libs.kermit)
         }
     }
 }
 
-// Add Koin KSP compiler dependency for code generation in KSP.
-// Source: https://github.com/InsertKoinIO/hello-kmp/blob/annotations/shared/build.gradle.kts
 dependencies {
     add("kspCommonMainMetadata", "io.insert-koin:koin-ksp-compiler:1.3.0")
 }
