@@ -7,6 +7,7 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
+import presenter.products.action.ProductsAction
 import presenter.products.state.ProductsState
 
 class ProductsViewModel(
@@ -20,6 +21,18 @@ class ProductsViewModel(
         getProducts()
     }
 
+    fun dispatchAction(action: ProductsAction) {
+        when (action) {
+            is ProductsAction.SearchProduct -> {
+                searchProduct(search = action.search)
+            }
+
+            ProductsAction.GetAllProducts -> {
+                getProducts()
+            }
+        }
+    }
+
     private fun getProducts() {
         viewModelScope.launch {
             getProductsUseCase().collectLatest { products ->
@@ -28,6 +41,16 @@ class ProductsViewModel(
                     products = products.map { it.toDomain() }
                 )
             }
+        }
+    }
+
+    private fun searchProduct(search: String) {
+        viewModelScope.launch {
+            val result = _state.value.products?.filter { it.title?.contains(search, true) == true }
+            _state.value = _state.value.copy(
+                isLoading = false,
+                products = result
+            )
         }
     }
 

@@ -1,5 +1,6 @@
 package presenter.products.view
 
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Spacer
@@ -10,7 +11,11 @@ import androidx.compose.foundation.lazy.grid.GridItemSpan
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.lazy.grid.items
 import androidx.compose.material.Text
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Close
+import androidx.compose.material.icons.filled.Search
 import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.Icon
 import androidx.compose.material3.SearchBar
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
@@ -21,8 +26,8 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
-import co.touchlab.kermit.Logger
 import org.koin.compose.koinInject
+import presenter.products.action.ProductsAction
 import presenter.products.state.ProductsState
 import presenter.products.viewmodel.ProductsViewModel
 import ui.components.product.CardProduct
@@ -32,16 +37,19 @@ fun ProductsScreen(
     viewModel: ProductsViewModel = koinInject<ProductsViewModel>()
 ) {
     val state = viewModel.state.collectAsState().value
-
     ProductsContent(
-        state = state
+        state = state,
+        action = {
+            viewModel.dispatchAction(it)
+        }
     )
 }
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun ProductsContent(
-    state: ProductsState
+    state: ProductsState,
+    action: (ProductsAction) -> Unit
 ) {
     var search by remember { mutableStateOf("") }
 
@@ -63,13 +71,34 @@ fun ProductsContent(
                         search = it
                     },
                     onSearch = {
-                        
+                        action(ProductsAction.SearchProduct(search))
                     },
                     placeholder = {
                         Text(
-                            text = "Search products",
+                            text = "Pesquisar produtos",
                             color = Color.Black.copy(alpha = 0.4f)
                         )
+                    },
+                    leadingIcon = {
+                        Icon(
+                            imageVector = Icons.Default.Search,
+                            contentDescription = "",
+                            tint = Color.Black.copy(alpha = 0.4f)
+                        )
+                    },
+                    trailingIcon = {
+                        if (search.isNotEmpty()) {
+                            Icon(
+                                imageVector = Icons.Default.Close,
+                                contentDescription = "",
+                                modifier = Modifier
+                                    .clickable {
+                                        search = ""
+                                        action(ProductsAction.GetAllProducts)
+                                    },
+                                tint = Color.Black.copy(alpha = 0.4f)
+                            )
+                        }
                     }
                 ) {}
 
