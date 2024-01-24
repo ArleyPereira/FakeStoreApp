@@ -1,5 +1,7 @@
 import androidx.compose.material.MaterialTheme
 import androidx.compose.runtime.Composable
+import cafe.adriel.voyager.navigator.Navigator
+import cafe.adriel.voyager.transitions.SlideTransition
 import org.koin.compose.KoinContext
 import presenter.products.view.ProductsScreen
 
@@ -7,7 +9,10 @@ import presenter.products.view.ProductsScreen
 fun App() {
     KoinContext {
         MaterialTheme {
-            ProductsScreen()
+            Navigator(screen = ProductsScreen())
+            { navigator ->
+                SlideTransition(navigator)
+            }
         }
     }
 }

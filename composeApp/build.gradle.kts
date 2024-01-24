@@ -35,10 +35,10 @@ kotlin {
             implementation(libs.compose.ui.tooling.preview)
             implementation(libs.androidx.activity.compose)
 
-            // Ktor
+            // Ktor - Client network
             implementation(libs.ktor.client.android)
 
-            // Koin
+            // Koin - Inject dependency
             implementation(project.dependencies.platform(libs.koin.bom))
             implementation(libs.koin.core)
             implementation(libs.koin.androidx.compose)
@@ -46,7 +46,7 @@ kotlin {
         }
 
         iosMain.dependencies {
-            // Ktor
+            // Ktor - Client network
             implementation(libs.ktor.client.darwin)
         }
 
@@ -62,23 +62,27 @@ kotlin {
             implementation(libs.kotlinx.serialization.json)
             implementation(libs.kotlinx.coroutines.core)
 
-            // Ktor
+            // Ktor - Client network
             implementation(libs.ktor.client.core)
             implementation(libs.ktor.client.content.negotiation)
             implementation(libs.ktor.serialization.kotlinx.json)
 
             implementation(libs.mvvm.core)
 
-            // Kamel
+            // Kamel - Load image
             implementation(libs.kamel.image)
 
-            // Koin
+            // Koin - Inject dependency
             implementation(project.dependencies.platform(libs.koin.bom))
             implementation(libs.koin.core)
             implementation(libs.koin.compose)
 
-            // Kermit Log
+            // Kermit - Log
             implementation(libs.kermit)
+
+            // Voyager - Navigation
+            implementation(libs.voyager.navigator)
+            implementation(libs.voyager.transitions)
         }
     }
 }

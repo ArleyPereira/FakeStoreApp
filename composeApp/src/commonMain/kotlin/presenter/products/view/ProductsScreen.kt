@@ -26,30 +26,40 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
+import cafe.adriel.voyager.core.screen.Screen
+import cafe.adriel.voyager.navigator.LocalNavigator
+import cafe.adriel.voyager.navigator.currentOrThrow
 import org.koin.compose.koinInject
+import presenter.details.view.ProductDetailsScreen
 import presenter.products.action.ProductsAction
 import presenter.products.state.ProductsState
 import presenter.products.viewmodel.ProductsViewModel
 import ui.components.product.CardProduct
 
-@Composable
-fun ProductsScreen(
-    viewModel: ProductsViewModel = koinInject<ProductsViewModel>()
-) {
-    val state = viewModel.state.collectAsState().value
-    ProductsContent(
-        state = state,
-        action = {
-            viewModel.dispatchAction(it)
-        }
-    )
+class ProductsScreen : Screen {
+    @Composable
+    override fun Content() {
+        val navigator = LocalNavigator.currentOrThrow
+        val viewModel: ProductsViewModel = koinInject<ProductsViewModel>()
+        val state = viewModel.state.collectAsState().value
+        ProductsContent(
+            state = state,
+            action = {
+                viewModel.dispatchAction(it)
+            },
+            onProductClick = {
+                navigator.push(ProductDetailsScreen(it))
+            }
+        )
+    }
 }
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun ProductsContent(
     state: ProductsState,
-    action: (ProductsAction) -> Unit
+    action: (ProductsAction) -> Unit,
+    onProductClick: (Int) -> Unit
 ) {
     var search by remember { mutableStateOf("") }
 
@@ -57,7 +67,6 @@ fun ProductsContent(
         columns = GridCells.Fixed(2),
         contentPadding = PaddingValues(12.dp)
     ) {
-
         item(span = { GridItemSpan(2) }) {
             Column {
                 SearchBar(
@@ -108,7 +117,10 @@ fun ProductsContent(
         items(items = state.products ?: emptyList(), key = { product ->
             product.id.toString()
         }) { product ->
-            CardProduct(product = product)
+            CardProduct(
+                product = product,
+                onProductClick = { product.id?.let(onProductClick) }
+            )
         }
     }
 }

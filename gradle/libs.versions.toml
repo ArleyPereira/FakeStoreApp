@@ -1,5 +1,5 @@
 [versions]
-agp = "8.1.4"
+agp = "8.2.2"
 android-compileSdk = "34"
 android-minSdk = "24"
 android-targetSdk = "34"
@@ -23,6 +23,7 @@ ktorClientCore = "2.3.7"
 mvvmCore = "0.16.1"
 ksp = "1.9.21-1.0.16"
 koin-bom = "3.5.3"
+voyager = "1.0.0"
 
 [libraries]
 kamel-image = { module = "media.kamel:kamel-image", version.ref = "kamelImage" }
@@ -55,6 +56,8 @@ koin-core = { module = "io.insert-koin:koin-core" }
 koin-compose = { module = "io.insert-koin:koin-compose" }
 koin-android = { module = "io.insert-koin:koin-android" }
 koin-androidx-compose = { module = "io.insert-koin:koin-androidx-compose" }
+voyager-navigator = { module = "cafe.adriel.voyager:voyager-navigator", version.ref = "voyager" }
+voyager-transitions = { module = "cafe.adriel.voyager:voyager-transitions", version.ref = "voyager" }
 
 [plugins]
 androidApplication = { id = "com.android.application", version.ref = "agp" }
