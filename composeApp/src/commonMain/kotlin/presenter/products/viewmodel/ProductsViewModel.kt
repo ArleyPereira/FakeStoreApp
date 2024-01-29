@@ -3,6 +3,7 @@ package presenter.products.viewmodel
 import data.mapper.toDomain
 import dev.icerock.moko.mvvm.viewmodel.ViewModel
 import domain.usecase.GetProductsUseCase
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.collectLatest

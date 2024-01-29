@@ -35,6 +35,7 @@ import presenter.products.action.ProductsAction
 import presenter.products.state.ProductsState
 import presenter.products.viewmodel.ProductsViewModel
 import ui.components.product.CardProduct
+import ui.components.product.ShimmerListItem
 
 class ProductsScreen : Screen {
     @Composable
@@ -63,64 +64,71 @@ fun ProductsContent(
 ) {
     var search by remember { mutableStateOf("") }
 
-    LazyVerticalGrid(
-        columns = GridCells.Fixed(2),
-        contentPadding = PaddingValues(12.dp)
-    ) {
-        item(span = { GridItemSpan(2) }) {
-            Column {
-                SearchBar(
-                    modifier = Modifier
-                        .fillMaxWidth(),
-                    query = search,
-                    active = false,
-                    onActiveChange = {
-                    },
-                    onQueryChange = {
-                        search = it
-                    },
-                    onSearch = {
-                        action(ProductsAction.SearchProduct(search))
-                    },
-                    placeholder = {
-                        Text(
-                            text = "Pesquisar produtos",
-                            color = Color.Black.copy(alpha = 0.4f)
-                        )
-                    },
-                    leadingIcon = {
-                        Icon(
-                            imageVector = Icons.Default.Search,
-                            contentDescription = "",
-                            tint = Color.Black.copy(alpha = 0.4f)
-                        )
-                    },
-                    trailingIcon = {
-                        if (search.isNotEmpty()) {
-                            Icon(
-                                imageVector = Icons.Default.Close,
-                                contentDescription = "",
-                                modifier = Modifier
-                                    .clickable {
-                                        search = ""
-                                        action(ProductsAction.GetAllProducts)
-                                    },
-                                tint = Color.Black.copy(alpha = 0.4f)
-                            )
-                        }
-                    }
-                ) {}
+    ShimmerListItem(
+        isLoading = state.isLoading,
+        contentAfterLoading = {
+            LazyVerticalGrid(
+                columns = GridCells.Fixed(2),
+                contentPadding = PaddingValues(12.dp)
+            ) {
+                item(span = { GridItemSpan(2) }) {
+                    Column {
+                        SearchBar(
+                            modifier = Modifier
+                                .fillMaxWidth(),
+                            query = search,
+                            active = false,
+                            onActiveChange = {
+                            },
+                            onQueryChange = {
+                                search = it
+                            },
+                            onSearch = {
+                                action(ProductsAction.SearchProduct(search))
+                            },
+                            placeholder = {
+                                Text(
+                                    text = "Pesquisar produtos",
+                                    color = Color.Black.copy(alpha = 0.4f)
+                                )
+                            },
+                            leadingIcon = {
+                                Icon(
+                                    imageVector = Icons.Default.Search,
+                                    contentDescription = "",
+                                    tint = Color.Black.copy(alpha = 0.4f)
+                                )
+                            },
+                            trailingIcon = {
+                                if (search.isNotEmpty()) {
+                                    Icon(
+                                        imageVector = Icons.Default.Close,
+                                        contentDescription = "",
+                                        modifier = Modifier
+                                            .clickable {
+                                                search = ""
+                                                action(ProductsAction.GetAllProducts)
+                                            },
+                                        tint = Color.Black.copy(alpha = 0.4f)
+                                    )
+                                }
+                            }
+                        ) {}
 
-                Spacer(Modifier.height(16.dp))
+                        Spacer(Modifier.height(16.dp))
+                    }
+                }
+
+                items(items = state.products ?: emptyList(), key = { product ->
+                    product.id.toString()
+                }) { product ->
+                    CardProduct(
+                        product = product,
+                        onProductClick = { product.id?.let(onProductClick) }
+                    )
+                }
             }
         }
-        items(items = state.products ?: emptyList(), key = { product ->
-            product.id.toString()
-        }) { product ->
-            CardProduct(
-                product = product,
-                onProductClick = { product.id?.let(onProductClick) }
-            )
-        }
-    }
+    )
+
 }

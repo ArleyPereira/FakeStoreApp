@@ -7,4 +7,6 @@ interface HomeRepository {
 
     suspend fun getProducts(): Flow<List<ProductResponse>>
 
+    suspend fun getProductById(productId: Int?): Flow<ProductResponse>
+
 }

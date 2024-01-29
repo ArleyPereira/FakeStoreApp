@@ -11,7 +11,11 @@ val presentationModule = module {
     }
 
     single {
-        ProductDetailsViewModel()
+        ProductDetailsViewModel(
+            productId = get(),
+            getProductByIdUseCase = get(),
+            getProductsUseCase = get()
+        )
     }
 
 }

@@ -2,8 +2,10 @@ package data.mapper
 
 import data.model.ProductResponse
 import data.model.RatingResponse
+import data.model.SizeProductResponse
 import domain.model.Product
 import domain.model.Rating
+import domain.model.SizeProduct
 
 fun RatingResponse.toDomain(): Rating {
     return Rating(
@@ -21,5 +23,12 @@ fun ProductResponse.toDomain(): Product {
         price = price,
         ratingResponse = ratingResponse?.toDomain(),
         title = title
+    )
+}
+
+fun SizeProductResponse.toDomain(): SizeProduct {
+    return SizeProduct(
+        id = id,
+        name = name
     )
 }

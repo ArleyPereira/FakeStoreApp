@@ -4,7 +4,6 @@ import data.model.ProductResponse
 import domain.repository.HomeRepository
 import io.ktor.client.HttpClient
 import io.ktor.client.request.get
-import io.ktor.client.statement.bodyAsText
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 import kotlinx.serialization.json.Json
@@ -19,6 +18,17 @@ class HomeRepositoryImpl(
             val responseBody: String = products()//response.bodyAsText()
             val products = Json.decodeFromString<List<ProductResponse>>(responseBody)
             flow { emit(products) }
+        } catch (exception: Exception) {
+            throw exception
+        }
+    }
+
+    override suspend fun getProductById(productId: Int?): Flow<ProductResponse> {
+        return try {
+            val response = httpClient.get("https://fakestoreapi.com/products/${productId}")
+            val responseBody: String = product()//response.bodyAsText()
+            val product = Json.decodeFromString<ProductResponse>(responseBody)
+            flow { emit(product) }
         } catch (exception: Exception) {
             throw exception
         }
@@ -149,4 +159,19 @@ private fun products(): String {
             "      \"title\": \"Tênis Asics Gel Nimbus 23 Masculino\"\n" +
             "   }\n" +
             "]"
+}
+
+private fun product(): String {
+    return "{\n" +
+            "  \"category\": \"Tenis\",\n" +
+            "  \"description\": \"Este tênis é muito bom. Oferece conforto excepcional e suporte para seus pés durante atividades esportivas. Além disso, possui um design moderno que combina estilo e funcionalidade.\",\n" +
+            "  \"id\": 1,\n" +
+            "  \"image\": \"https://imgnike-a.akamaihd.net/768x768/02518351.jpg\",\n" +
+            "  \"price\": 499.99,\n" +
+            "  \"rating\": {\n" +
+            "    \"count\": 3,\n" +
+            "    \"rate\": 4.99\n" +
+            "  },\n" +
+            "  \"title\": \"Tênis Nike Zoom Bella 6 Feminino\"\n" +
+            "}"
 }
