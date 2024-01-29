@@ -1,4 +1,6 @@
 import org.jetbrains.compose.ExperimentalComposeLibrary
+import java.util.Properties
+import java.io.FileInputStream
 
 plugins {
     alias(libs.plugins.kotlinMultiplatform)
@@ -91,7 +93,20 @@ dependencies {
     add("kspCommonMainMetadata", "io.insert-koin:koin-ksp-compiler:1.3.0")
 }
 
+val keystorePropertiesFile: File = rootProject.file("local.properties")
+val keystoreProperties = Properties()
+keystoreProperties.load(FileInputStream(keystorePropertiesFile))
+
 android {
+    signingConfigs {
+        create("release") {
+            keyAlias = keystoreProperties["keyAlias"] as String
+            keyPassword = keystoreProperties["keyPassword"] as String
+            storeFile = file(keystoreProperties["storeFile"] as String)
+            storePassword = keystoreProperties["storePassword"] as String
+        }
+    }
+
     namespace = "br.com.hellodev.fakestoreapp"
     compileSdk = libs.versions.android.compileSdk.get().toInt()
 
@@ -105,6 +120,7 @@ android {
         targetSdk = libs.versions.android.targetSdk.get().toInt()
         versionCode = 1
         versionName = "1.0"
+        signingConfig = signingConfigs.getByName("release")
     }
     packaging {
         resources {
