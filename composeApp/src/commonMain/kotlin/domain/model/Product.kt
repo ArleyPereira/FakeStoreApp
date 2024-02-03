@@ -10,5 +10,6 @@ data class Product(
     val image: String? = null,
     val price: Double? = null,
     val ratingResponse: Rating? = null,
-    val title: String? = null
+    val title: String? = null,
+    val colors: List<ProductColor>? = null
 )

@@ -25,7 +25,7 @@ class HomeRepositoryImpl(
 
     override suspend fun getProductById(productId: Int?): Flow<ProductResponse> {
         return try {
-            val response = httpClient.get("https://fakestoreapi.com/products/${productId}")
+            //val response = httpClient.get("https://fakestoreapi.com/products/${productId}")
             val responseBody: String = product()//response.bodyAsText()
             val product = Json.decodeFromString<ProductResponse>(responseBody)
             flow { emit(product) }
@@ -38,126 +38,312 @@ class HomeRepositoryImpl(
 
 private fun products(): String {
     return "[\n" +
-            "   {\n" +
-            "      \"category\": \"Tenis\",\n" +
-            "      \"description\": \"Este tênis é muito bom\",\n" +
-            "      \"id\": 1,\n" +
-            "      \"image\": \"https://imgnike-a.akamaihd.net/768x768/02518351.jpg\",\n" +
-            "      \"price\": 499.99,\n" +
-            "      \"rating\": {\n" +
-            "         \"count\": 3,\n" +
-            "         \"rate\": 4.99\n" +
+            "  {\n" +
+            "    \"category\": \"Tenis\",\n" +
+            "    \"description\": \"Este tênis é muito bom. Oferece conforto excepcional e suporte para seus pés durante atividades esportivas. Além disso, possui um design moderno que combina estilo e funcionalidade.\",\n" +
+            "    \"id\": 1,\n" +
+            "    \"image\": \"https://imgnike-a.akamaihd.net/768x768/02518351.jpg\",\n" +
+            "    \"price\": 499.99,\n" +
+            "    \"rating\": {\n" +
+            "      \"count\": 3,\n" +
+            "      \"rate\": 4.99\n" +
+            "    },\n" +
+            "    \"title\": \"Tênis Nike Zoom Bella 6 Feminino\",\n" +
+            "    \"colors\": [\n" +
+            "      {\n" +
+            "        \"id\": 1,\n" +
+            "        \"color\": \"#FF0000\"\n" +
             "      },\n" +
-            "      \"title\": \"Tênis Nike Zoom Bella 6 Feminino\"\n" +
-            "   },\n" +
-            "   {\n" +
-            "      \"category\": \"Tenis\",\n" +
-            "      \"description\": \"Outro tênis incrível\",\n" +
-            "      \"id\": 2,\n" +
-            "      \"image\": \"https://imgnike-a.akamaihd.net/768x768/01356551.jpg\",\n" +
-            "      \"price\": 399.99,\n" +
-            "      \"rating\": {\n" +
-            "         \"count\": 5,\n" +
-            "         \"rate\": 4.75\n" +
+            "      {\n" +
+            "        \"id\": 2,\n" +
+            "        \"color\": \"#0000FF\"\n" +
             "      },\n" +
-            "      \"title\": \"Tênis Adidas Boost Masculino\"\n" +
-            "   },\n" +
-            "   {\n" +
-            "      \"category\": \"Tenis\",\n" +
-            "      \"description\": \"Ótima escolha para corridas\",\n" +
-            "      \"id\": 3,\n" +
-            "      \"image\": \"https://imgnike-a.akamaihd.net/768x768/025803ID.jpg\",\n" +
-            "      \"price\": 299.99,\n" +
-            "      \"rating\": {\n" +
-            "         \"count\": 2,\n" +
-            "         \"rate\": 4.5\n" +
+            "      {\n" +
+            "        \"id\": 4,\n" +
+            "        \"color\": \"#00FF00\"\n" +
             "      },\n" +
-            "      \"title\": \"Tênis Puma Speed 500 Feminino\"\n" +
-            "   },\n" +
-            "   {\n" +
-            "      \"category\": \"Tenis\",\n" +
-            "      \"description\": \"Conforto e estilo em um só tênis\",\n" +
-            "      \"id\": 4,\n" +
-            "      \"image\": \"https://imgnike-a.akamaihd.net/768x768/02580315.jpg\",\n" +
-            "      \"price\": 549.99,\n" +
-            "      \"rating\": {\n" +
-            "         \"count\": 4,\n" +
-            "         \"rate\": 4.85\n" +
+            "      {\n" +
+            "        \"id\": 5,\n" +
+            "        \"color\": \"#FFFF00\"\n" +
             "      },\n" +
-            "      \"title\": \"Tênis Asics Gel Nimbus 23 Masculino\"\n" +
-            "   },\n" +
-            "   {\n" +
-            "      \"category\": \"Tenis\",\n" +
-            "      \"description\": \"Este tênis é muito bom\",\n" +
-            "      \"id\": 5,\n" +
-            "      \"image\": \"https://imgnike-a.akamaihd.net/768x768/0258035A.jpg\",\n" +
-            "      \"price\": 499.99,\n" +
-            "      \"rating\": {\n" +
-            "         \"count\": 3,\n" +
-            "         \"rate\": 4.99\n" +
+            "      {\n" +
+            "        \"id\": 6,\n" +
+            "        \"color\": \"#800080\"\n" +
+            "      }\n" +
+            "    ]\n" +
+            "  },\n" +
+            "  {\n" +
+            "    \"category\": \"Tenis\",\n" +
+            "    \"description\": \"Este tênis é muito bom. Oferece conforto excepcional e suporte para seus pés durante atividades esportivas. Além disso, possui um design moderno que combina estilo e funcionalidade.\",\n" +
+            "    \"id\": 2,\n" +
+            "    \"image\": \"https://imgnike-a.akamaihd.net/768x768/025803ID.jpg\",\n" +
+            "    \"price\": 499.99,\n" +
+            "    \"rating\": {\n" +
+            "      \"count\": 3,\n" +
+            "      \"rate\": 4.99\n" +
+            "    },\n" +
+            "    \"title\": \"Tênis Nike Zoom Bella 6 Feminino\",\n" +
+            "    \"colors\": [\n" +
+            "      {\n" +
+            "        \"id\": 1,\n" +
+            "        \"color\": \"#FF0000\"\n" +
             "      },\n" +
-            "      \"title\": \"Tênis Nike Zoom Bella 6 Feminino\"\n" +
-            "   },\n" +
-            "   {\n" +
-            "      \"category\": \"Tenis\",\n" +
-            "      \"description\": \"Outro tênis incrível\",\n" +
-            "      \"id\": 6,\n" +
-            "      \"image\": \"https://imgnike-a.akamaihd.net/768x768/025803P1.jpg\",\n" +
-            "      \"price\": 399.99,\n" +
-            "      \"rating\": {\n" +
-            "         \"count\": 5,\n" +
-            "         \"rate\": 4.75\n" +
+            "      {\n" +
+            "        \"id\": 2,\n" +
+            "        \"color\": \"#0000FF\"\n" +
             "      },\n" +
-            "      \"title\": \"Tênis Adidas Boost Masculino\"\n" +
-            "   },\n" +
-            "   {\n" +
-            "      \"category\": \"Tenis\",\n" +
-            "      \"description\": \"Ótima escolha para corridas\",\n" +
-            "      \"id\": 7,\n" +
-            "      \"image\": \"https://imgnike-a.akamaihd.net/768x768/0228105C.jpg\",\n" +
-            "      \"price\": 299.99,\n" +
-            "      \"rating\": {\n" +
-            "         \"count\": 2,\n" +
-            "         \"rate\": 4.5\n" +
+            "      {\n" +
+            "        \"id\": 4,\n" +
+            "        \"color\": \"#00FF00\"\n" +
             "      },\n" +
-            "      \"title\": \"Tênis Puma Speed 500 Feminino\"\n" +
-            "   },\n" +
-            "   {\n" +
-            "      \"category\": \"Tenis\",\n" +
-            "      \"description\": \"Conforto e estilo em um só tênis\",\n" +
-            "      \"id\": 8,\n" +
-            "      \"image\": \"https://imgnike-a.akamaihd.net/768x768/022810A1.jpg\",\n" +
-            "      \"price\": 549.99,\n" +
-            "      \"rating\": {\n" +
-            "         \"count\": 4,\n" +
-            "         \"rate\": 4.85\n" +
+            "      {\n" +
+            "        \"id\": 5,\n" +
+            "        \"color\": \"#FFFF00\"\n" +
             "      },\n" +
-            "      \"title\": \"Tênis Asics Gel Nimbus 23 Masculino\"\n" +
-            "   },\n" +
-            "   {\n" +
-            "      \"category\": \"Tenis\",\n" +
-            "      \"description\": \"Ótima escolha para corridas\",\n" +
-            "      \"id\": 9,\n" +
-            "      \"image\": \"https://imgnike-a.akamaihd.net/768x768/02281086.jpg\",\n" +
-            "      \"price\": 299.99,\n" +
-            "      \"rating\": {\n" +
-            "         \"count\": 2,\n" +
-            "         \"rate\": 4.5\n" +
+            "      {\n" +
+            "        \"id\": 6,\n" +
+            "        \"color\": \"#800080\"\n" +
+            "      }\n" +
+            "    ]\n" +
+            "  },\n" +
+            "  {\n" +
+            "    \"category\": \"Tenis\",\n" +
+            "    \"description\": \"Este tênis é muito bom. Oferece conforto excepcional e suporte para seus pés durante atividades esportivas. Além disso, possui um design moderno que combina estilo e funcionalidade.\",\n" +
+            "    \"id\": 3,\n" +
+            "    \"image\": \"https://imgnike-a.akamaihd.net/768x768/02580315.jpg\",\n" +
+            "    \"price\": 499.99,\n" +
+            "    \"rating\": {\n" +
+            "      \"count\": 3,\n" +
+            "      \"rate\": 4.99\n" +
+            "    },\n" +
+            "    \"title\": \"Tênis Nike Zoom Bella 6 Feminino\",\n" +
+            "    \"colors\": [\n" +
+            "      {\n" +
+            "        \"id\": 1,\n" +
+            "        \"color\": \"#FF0000\"\n" +
             "      },\n" +
-            "      \"title\": \"Tênis Puma Speed 500 Feminino\"\n" +
-            "   },\n" +
-            "   {\n" +
-            "      \"category\": \"Tenis\",\n" +
-            "      \"description\": \"Conforto e estilo em um só tênis\",\n" +
-            "      \"id\": 10,\n" +
-            "      \"image\": \"https://imgnike-a.akamaihd.net/768x768/02281087.jpg\",\n" +
-            "      \"price\": 549.99,\n" +
-            "      \"rating\": {\n" +
-            "         \"count\": 4,\n" +
-            "         \"rate\": 4.85\n" +
+            "      {\n" +
+            "        \"id\": 2,\n" +
+            "        \"color\": \"#0000FF\"\n" +
             "      },\n" +
-            "      \"title\": \"Tênis Asics Gel Nimbus 23 Masculino\"\n" +
-            "   }\n" +
+            "      {\n" +
+            "        \"id\": 4,\n" +
+            "        \"color\": \"#00FF00\"\n" +
+            "      },\n" +
+            "      {\n" +
+            "        \"id\": 5,\n" +
+            "        \"color\": \"#FFFF00\"\n" +
+            "      },\n" +
+            "      {\n" +
+            "        \"id\": 6,\n" +
+            "        \"color\": \"#800080\"\n" +
+            "      }\n" +
+            "    ]\n" +
+            "  },\n" +
+            "  {\n" +
+            "    \"category\": \"Tenis\",\n" +
+            "    \"description\": \"Este tênis é muito bom. Oferece conforto excepcional e suporte para seus pés durante atividades esportivas. Além disso, possui um design moderno que combina estilo e funcionalidade.\",\n" +
+            "    \"id\": 4,\n" +
+            "    \"image\": \"https://imgnike-a.akamaihd.net/768x768/0258035A.jpg\",\n" +
+            "    \"price\": 499.99,\n" +
+            "    \"rating\": {\n" +
+            "      \"count\": 3,\n" +
+            "      \"rate\": 4.99\n" +
+            "    },\n" +
+            "    \"title\": \"Tênis Nike Zoom Bella 6 Feminino\",\n" +
+            "    \"colors\": [\n" +
+            "      {\n" +
+            "        \"id\": 1,\n" +
+            "        \"color\": \"#FF0000\"\n" +
+            "      },\n" +
+            "      {\n" +
+            "        \"id\": 2,\n" +
+            "        \"color\": \"#0000FF\"\n" +
+            "      },\n" +
+            "      {\n" +
+            "        \"id\": 4,\n" +
+            "        \"color\": \"#00FF00\"\n" +
+            "      },\n" +
+            "      {\n" +
+            "        \"id\": 5,\n" +
+            "        \"color\": \"#FFFF00\"\n" +
+            "      },\n" +
+            "      {\n" +
+            "        \"id\": 6,\n" +
+            "        \"color\": \"#800080\"\n" +
+            "      }\n" +
+            "    ]\n" +
+            "  },\n" +
+            "  {\n" +
+            "    \"category\": \"Tenis\",\n" +
+            "    \"description\": \"Este tênis é muito bom. Oferece conforto excepcional e suporte para seus pés durante atividades esportivas. Além disso, possui um design moderno que combina estilo e funcionalidade.\",\n" +
+            "    \"id\": 5,\n" +
+            "    \"image\": \"https://imgnike-a.akamaihd.net/768x768/025803P1.jpg\",\n" +
+            "    \"price\": 499.99,\n" +
+            "    \"rating\": {\n" +
+            "      \"count\": 3,\n" +
+            "      \"rate\": 4.99\n" +
+            "    },\n" +
+            "    \"title\": \"Tênis Nike Zoom Bella 6 Feminino\",\n" +
+            "    \"colors\": [\n" +
+            "      {\n" +
+            "        \"id\": 1,\n" +
+            "        \"color\": \"#FF0000\"\n" +
+            "      },\n" +
+            "      {\n" +
+            "        \"id\": 2,\n" +
+            "        \"color\": \"#0000FF\"\n" +
+            "      },\n" +
+            "      {\n" +
+            "        \"id\": 4,\n" +
+            "        \"color\": \"#00FF00\"\n" +
+            "      },\n" +
+            "      {\n" +
+            "        \"id\": 5,\n" +
+            "        \"color\": \"#FFFF00\"\n" +
+            "      },\n" +
+            "      {\n" +
+            "        \"id\": 6,\n" +
+            "        \"color\": \"#800080\"\n" +
+            "      }\n" +
+            "    ]\n" +
+            "  },\n" +
+            "  {\n" +
+            "    \"category\": \"Tenis\",\n" +
+            "    \"description\": \"Este tênis é muito bom. Oferece conforto excepcional e suporte para seus pés durante atividades esportivas. Além disso, possui um design moderno que combina estilo e funcionalidade.\",\n" +
+            "    \"id\": 6,\n" +
+            "    \"image\": \"https://imgnike-a.akamaihd.net/768x768/0228105C.jpg\",\n" +
+            "    \"price\": 499.99,\n" +
+            "    \"rating\": {\n" +
+            "      \"count\": 3,\n" +
+            "      \"rate\": 4.99\n" +
+            "    },\n" +
+            "    \"title\": \"Tênis Nike Zoom Bella 6 Feminino\",\n" +
+            "    \"colors\": [\n" +
+            "      {\n" +
+            "        \"id\": 1,\n" +
+            "        \"color\": \"#FF0000\"\n" +
+            "      },\n" +
+            "      {\n" +
+            "        \"id\": 2,\n" +
+            "        \"color\": \"#0000FF\"\n" +
+            "      },\n" +
+            "      {\n" +
+            "        \"id\": 4,\n" +
+            "        \"color\": \"#00FF00\"\n" +
+            "      },\n" +
+            "      {\n" +
+            "        \"id\": 5,\n" +
+            "        \"color\": \"#FFFF00\"\n" +
+            "      },\n" +
+            "      {\n" +
+            "        \"id\": 6,\n" +
+            "        \"color\": \"#800080\"\n" +
+            "      }\n" +
+            "    ]\n" +
+            "  },\n" +
+            "  {\n" +
+            "    \"category\": \"Tenis\",\n" +
+            "    \"description\": \"Este tênis é muito bom. Oferece conforto excepcional e suporte para seus pés durante atividades esportivas. Além disso, possui um design moderno que combina estilo e funcionalidade.\",\n" +
+            "    \"id\": 7,\n" +
+            "    \"image\": \"https://imgnike-a.akamaihd.net/768x768/022810A1.jpg\",\n" +
+            "    \"price\": 499.99,\n" +
+            "    \"rating\": {\n" +
+            "      \"count\": 3,\n" +
+            "      \"rate\": 4.99\n" +
+            "    },\n" +
+            "    \"title\": \"Tênis Nike Zoom Bella 6 Feminino\",\n" +
+            "    \"colors\": [\n" +
+            "      {\n" +
+            "        \"id\": 1,\n" +
+            "        \"color\": \"#FF0000\"\n" +
+            "      },\n" +
+            "      {\n" +
+            "        \"id\": 2,\n" +
+            "        \"color\": \"#0000FF\"\n" +
+            "      },\n" +
+            "      {\n" +
+            "        \"id\": 4,\n" +
+            "        \"color\": \"#00FF00\"\n" +
+            "      },\n" +
+            "      {\n" +
+            "        \"id\": 5,\n" +
+            "        \"color\": \"#FFFF00\"\n" +
+            "      },\n" +
+            "      {\n" +
+            "        \"id\": 6,\n" +
+            "        \"color\": \"#800080\"\n" +
+            "      }\n" +
+            "    ]\n" +
+            "  },\n" +
+            "  {\n" +
+            "    \"category\": \"Tenis\",\n" +
+            "    \"description\": \"Este tênis é muito bom. Oferece conforto excepcional e suporte para seus pés durante atividades esportivas. Além disso, possui um design moderno que combina estilo e funcionalidade.\",\n" +
+            "    \"id\": 8,\n" +
+            "    \"image\": \"https://imgnike-a.akamaihd.net/768x768/02281086.jpg\",\n" +
+            "    \"price\": 499.99,\n" +
+            "    \"rating\": {\n" +
+            "      \"count\": 3,\n" +
+            "      \"rate\": 4.99\n" +
+            "    },\n" +
+            "    \"title\": \"Tênis Nike Zoom Bella 6 Feminino\",\n" +
+            "    \"colors\": [\n" +
+            "      {\n" +
+            "        \"id\": 1,\n" +
+            "        \"color\": \"#FF0000\"\n" +
+            "      },\n" +
+            "      {\n" +
+            "        \"id\": 2,\n" +
+            "        \"color\": \"#0000FF\"\n" +
+            "      },\n" +
+            "      {\n" +
+            "        \"id\": 4,\n" +
+            "        \"color\": \"#00FF00\"\n" +
+            "      },\n" +
+            "      {\n" +
+            "        \"id\": 5,\n" +
+            "        \"color\": \"#FFFF00\"\n" +
+            "      },\n" +
+            "      {\n" +
+            "        \"id\": 6,\n" +
+            "        \"color\": \"#800080\"\n" +
+            "      }\n" +
+            "    ]\n" +
+            "  },\n" +
+            "  {\n" +
+            "    \"category\": \"Tenis\",\n" +
+            "    \"description\": \"Este tênis é muito bom. Oferece conforto excepcional e suporte para seus pés durante atividades esportivas. Além disso, possui um design moderno que combina estilo e funcionalidade.\",\n" +
+            "    \"id\": 9,\n" +
+            "    \"image\": \"https://imgnike-a.akamaihd.net/768x768/02281087.jpg\",\n" +
+            "    \"price\": 499.99,\n" +
+            "    \"rating\": {\n" +
+            "      \"count\": 3,\n" +
+            "      \"rate\": 4.99\n" +
+            "    },\n" +
+            "    \"title\": \"Tênis Nike Zoom Bella 6 Feminino\",\n" +
+            "    \"colors\": [\n" +
+            "      {\n" +
+            "        \"id\": 1,\n" +
+            "        \"color\": \"#FF0000\"\n" +
+            "      },\n" +
+            "      {\n" +
+            "        \"id\": 2,\n" +
+            "        \"color\": \"#0000FF\"\n" +
+            "      },\n" +
+            "      {\n" +
+            "        \"id\": 4,\n" +
+            "        \"color\": \"#00FF00\"\n" +
+            "      },\n" +
+            "      {\n" +
+            "        \"id\": 5,\n" +
+            "        \"color\": \"#FFFF00\"\n" +
+            "      },\n" +
+            "      {\n" +
+            "        \"id\": 6,\n" +
+            "        \"color\": \"#800080\"\n" +
+            "      }\n" +
+            "    ]\n" +
+            "  }\n" +
             "]"
 }
 
@@ -172,6 +358,28 @@ private fun product(): String {
             "    \"count\": 3,\n" +
             "    \"rate\": 4.99\n" +
             "  },\n" +
-            "  \"title\": \"Tênis Nike Zoom Bella 6 Feminino\"\n" +
-            "}"
+            "  \"title\": \"Tênis Nike Zoom Bella 6 Feminino\",\n" +
+            "  \"colors\": [\n" +
+            "    {\n" +
+            "      \"id\": 1,\n" +
+            "      \"color\": \"#FF0000\"\n" +
+            "    },\n" +
+            "    {\n" +
+            "      \"id\": 2,\n" +
+            "      \"color\": \"#0000FF\"\n" +
+            "    },\n" +
+            "    {\n" +
+            "      \"id\": 4,\n" +
+            "      \"color\": \"#00FF00\"\n" +
+            "    },\n" +
+            "    {\n" +
+            "      \"id\": 5,\n" +
+            "      \"color\": \"#FFFF00\"\n" +
+            "    },\n" +
+            "    {\n" +
+            "      \"id\": 6,\n" +
+            "      \"color\": \"#800080\"\n" +
+            "    }\n" +
+            "  ]\n" +
+            "}\n"
 }

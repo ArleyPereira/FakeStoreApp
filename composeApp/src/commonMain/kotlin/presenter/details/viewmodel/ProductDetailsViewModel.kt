@@ -26,7 +26,11 @@ class ProductDetailsViewModel(
     }
 
     fun dispatchAction(action: ProductDetailsAction) {
-
+        when (action) {
+            is ProductDetailsAction.SelectProductColor -> {
+                selectProductColor(colorId = action.colorId)
+            }
+        }
     }
 
     private fun getProduct(productId: Int?) {
@@ -34,7 +38,8 @@ class ProductDetailsViewModel(
             getProductByIdUseCase(productId).collectLatest { product ->
                 _state.value = _state.value.copy(
                     isLoading = false,
-                    product = product.toDomain()
+                    product = product.toDomain(),
+                    productColorSelected = product.colors?.firstOrNull()?.toDomain()
                 )
             }
         }
@@ -49,6 +54,12 @@ class ProductDetailsViewModel(
                 )
             }
         }
+    }
+
+    private fun selectProductColor(colorId: Int?) {
+        _state.value = _state.value.copy(
+            productColorSelected = _state.value.product?.colors?.firstOrNull { it.id == colorId }
+        )
     }
 
 }

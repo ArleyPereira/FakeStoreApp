@@ -4,7 +4,6 @@ import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
-import androidx.compose.foundation.horizontalScroll
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -15,13 +14,11 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.rememberScrollState
-import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
@@ -36,7 +33,6 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.layout.ContentScale
@@ -53,9 +49,11 @@ import io.kamel.core.getOrNull
 import io.kamel.image.asyncPainterResource
 import org.koin.compose.koinInject
 import org.koin.core.parameter.parametersOf
+import presenter.details.action.ProductDetailsAction
 import presenter.details.state.ProductDetailsState
 import presenter.details.viewmodel.ProductDetailsViewModel
 import ui.components.product.CardProduct
+import ui.components.product.ProductColorUI
 import ui.components.product.SizeOptionProduct
 
 data class ProductDetailsScreen(
@@ -69,7 +67,8 @@ data class ProductDetailsScreen(
         val state = viewModel.state.collectAsState().value
         ProductDetailsContent(
             state = state,
-            onBackPressed = { navigator.pop() }
+            action = { viewModel.dispatchAction(it) },
+            onBackPressed = { navigator.pop() },
         )
     }
 }
@@ -77,6 +76,7 @@ data class ProductDetailsScreen(
 @Composable
 fun ProductDetailsContent(
     state: ProductDetailsState,
+    action: (ProductDetailsAction) -> Unit,
     onBackPressed: () -> Unit
 ) {
     var sizeIsSelected by remember {
@@ -226,84 +226,35 @@ fun ProductDetailsContent(
             fontWeight = FontWeight.SemiBold
         )
 
-        Row(
+        Spacer(modifier = Modifier.height(8.dp))
+
+        LazyRow(
             modifier = Modifier
-                .fillMaxWidth()
-                .horizontalScroll(rememberScrollState())
-                .padding(start = 16.dp, end = 16.dp, top = 8.dp),
-            verticalAlignment = Alignment.CenterVertically,
+                .padding(horizontal = 16.dp),
             horizontalArrangement = Arrangement.spacedBy(8.dp)
         ) {
-            Spacer(
-                modifier = Modifier
-                    .size(30.dp)
-                    .clip(CircleShape)
-                    .background(Color(0xFFFC6E20))
-                    .border(
-                        width = 6.dp,
-                        color = Color(0xFFFFF3E9),
-                        shape = CircleShape
-                    )
-            )
-
-            Spacer(
-                modifier = Modifier
-                    .size(30.dp)
-                    .clip(CircleShape)
-                    .background(Color(0xFF5C3DFF))
-                    .border(
-                        width = 6.dp,
-                        color = Color(0xFFEEEBFF),
-                        shape = CircleShape
-                    )
-            )
-
-            Spacer(
-                modifier = Modifier
-                    .size(30.dp)
-                    .clip(CircleShape)
-                    .background(Color(0xFF3A3A3A))
-                    .border(
-                        width = 6.dp,
-                        color = Color(0xFFEDEDED),
-                        shape = CircleShape
-                    )
-            )
-
-            Spacer(
-                modifier = Modifier
-                    .size(30.dp)
-                    .clip(CircleShape)
-                    .background(Color(0xFFFF3737))
-                    .border(
-                        width = 6.dp,
-                        color = Color(0xFFFFEBEB),
-                        shape = CircleShape
-                    )
-            )
-
-            Spacer(
-                modifier = Modifier
-                    .size(30.dp)
-                    .clip(CircleShape)
-                    .background(Color(0xFF1790C8))
-                    .border(
-                        width = 6.dp,
-                        color = Color(0xFFDEF4FF),
-                        shape = CircleShape
-                    )
-            )
+            items(state.product?.colors ?: emptyList()) { color ->
+                ProductColorUI(
+                    productColor = color,
+                    onColorSelected = { colorId ->
+                        action(ProductDetailsAction.SelectProductColor(colorId))
+                    },
+                    isSelected = state.productColorSelected == color
+                )
+            }
         }
 
-        state.product?.description?.let { description ->
-            Spacer(modifier = Modifier.height(16.dp))
+        Spacer(modifier = Modifier.height(16.dp))
 
+        state.product?.description?.let { description ->
             Text(
                 text = "Descrição",
                 modifier = Modifier
                     .padding(start = 16.dp),
                 fontWeight = FontWeight.SemiBold
             )
+
+            Spacer(modifier = Modifier.height(8.dp))
 
             Text(
                 text = description,
