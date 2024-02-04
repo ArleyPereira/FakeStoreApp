@@ -1,11 +1,14 @@
 package presenter.products.view
 
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.GridItemSpan
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
@@ -23,8 +26,12 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
+import androidx.compose.ui.Alignment
+import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalFocusManager
+import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.unit.dp
 import cafe.adriel.voyager.core.screen.Screen
 import cafe.adriel.voyager.navigator.LocalNavigator
@@ -55,14 +62,18 @@ class ProductsScreen : Screen {
     }
 }
 
-@OptIn(ExperimentalMaterial3Api::class)
+@OptIn(ExperimentalMaterial3Api::class, ExperimentalComposeUiApi::class)
 @Composable
 fun ProductsContent(
     state: ProductsState,
     action: (ProductsAction) -> Unit,
     onProductClick: (Int) -> Unit
 ) {
+    val controller = LocalSoftwareKeyboardController.current
+    val focusManager = LocalFocusManager.current
+
     var search by remember { mutableStateOf("") }
+    var onSearched by remember { mutableStateOf(false) }
 
     ShimmerListItem(
         isLoading = state.isLoading,
@@ -72,50 +83,78 @@ fun ProductsContent(
                 contentPadding = PaddingValues(12.dp)
             ) {
                 item(span = { GridItemSpan(2) }) {
-                    Column {
-                        SearchBar(
+                    Row(
+                        verticalAlignment = Alignment.CenterVertically
+                    ) {
+                        Column(
                             modifier = Modifier
-                                .fillMaxWidth(),
-                            query = search,
-                            active = false,
-                            onActiveChange = {
-                            },
-                            onQueryChange = {
-                                search = it
-                            },
-                            onSearch = {
-                                action(ProductsAction.SearchProduct(search))
-                            },
-                            placeholder = {
-                                Text(
-                                    text = "Pesquisar produtos",
-                                    color = Color.Black.copy(alpha = 0.4f)
-                                )
-                            },
-                            leadingIcon = {
-                                Icon(
-                                    imageVector = Icons.Default.Search,
-                                    contentDescription = "",
-                                    tint = Color.Black.copy(alpha = 0.4f)
-                                )
-                            },
-                            trailingIcon = {
-                                if (search.isNotEmpty()) {
+                                .weight(1f)
+                        ) {
+                            SearchBar(
+                                modifier = Modifier
+                                    .fillMaxWidth(),
+                                query = search,
+                                active = false,
+                                onActiveChange = {
+                                },
+                                onQueryChange = {
+                                    search = it
+                                },
+                                onSearch = {
+                                    onSearched = true
+                                    action(ProductsAction.SearchProduct(search))
+
+                                    controller?.hide()
+                                    focusManager.clearFocus()
+                                },
+                                placeholder = {
+                                    Text(
+                                        text = "Pesquisar produtos",
+                                        color = Color.Black.copy(alpha = 0.4f)
+                                    )
+                                },
+                                leadingIcon = {
                                     Icon(
-                                        imageVector = Icons.Default.Close,
+                                        imageVector = Icons.Default.Search,
                                         contentDescription = "",
-                                        modifier = Modifier
-                                            .clickable {
-                                                search = ""
-                                                action(ProductsAction.GetAllProducts)
-                                            },
                                         tint = Color.Black.copy(alpha = 0.4f)
                                     )
+                                },
+                                trailingIcon = {
+                                    if (search.isNotEmpty()) {
+                                        Icon(
+                                            imageVector = Icons.Default.Close,
+                                            contentDescription = "",
+                                            modifier = Modifier
+                                                .clickable {
+                                                    search = ""
+                                                    action(ProductsAction.GetAllProducts)
+                                                    onSearched = false
+                                                },
+                                            tint = Color.Black.copy(alpha = 0.4f)
+                                        )
+                                    }
                                 }
-                            }
-                        ) {}
+                            ) {}
 
-                        Spacer(Modifier.height(16.dp))
+                            Spacer(Modifier.height(16.dp))
+                        }
+
+                        if (onSearched) {
+                            Text(
+                                text = "Todos",
+                                modifier = Modifier
+                                    .clickable {
+                                        search = ""
+                                        action(ProductsAction.GetAllProducts)
+                                        onSearched = false
+
+                                        controller?.hide()
+                                        focusManager.clearFocus()
+                                    }
+                                    .padding(16.dp)
+                            )
+                        }
                     }
                 }
 

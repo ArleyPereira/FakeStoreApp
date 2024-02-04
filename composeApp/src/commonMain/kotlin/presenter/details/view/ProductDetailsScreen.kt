@@ -277,6 +277,7 @@ fun ProductDetailsContent(
             )
 
             LazyRow(
+                contentPadding = PaddingValues(horizontal = 8.dp),
                 content = {
                     items(
                         items = products,

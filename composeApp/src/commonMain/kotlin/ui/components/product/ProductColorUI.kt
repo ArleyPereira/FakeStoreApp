@@ -47,7 +47,7 @@ fun ProductColorUI(
                 .size(30.dp)
                 .background(
                     shape = CircleShape,
-                    color = productColor.color.parseColor().copy(alpha = 0.2f)
+                    color = productColor.color.parseColor().copy(alpha = 0.1f)
                 )
                 .align(Alignment.Center)
         )
