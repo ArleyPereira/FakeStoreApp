@@ -1,6 +1,5 @@
-import org.jetbrains.compose.ExperimentalComposeLibrary
-import java.util.Properties
 import java.io.FileInputStream
+import java.util.Properties
 
 plugins {
     alias(libs.plugins.kotlinMultiplatform)
@@ -58,7 +57,8 @@ kotlin {
             implementation(compose.material) // Verificar se pode remover depois
             implementation(compose.material3)
             implementation(compose.ui)
-            @OptIn(ExperimentalComposeLibrary::class)
+
+            // Resources
             implementation(compose.components.resources)
 
             implementation(libs.kotlinx.serialization.json)

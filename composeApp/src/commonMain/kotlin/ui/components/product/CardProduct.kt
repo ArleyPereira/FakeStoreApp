@@ -52,8 +52,8 @@ import androidx.compose.ui.unit.sp
 import domain.model.Product
 import io.kamel.image.KamelImage
 import io.kamel.image.asyncPainterResource
+import org.jetbrains.compose.resources.ExperimentalResourceApi
 
-@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun CardProduct(
     modifier: Modifier = Modifier,
