@@ -1,4 +1,5 @@
 import androidx.compose.ui.window.ComposeUIViewController
+import core.app.App
 import di.dataModule
 import di.domainModule
 import di.networkModule

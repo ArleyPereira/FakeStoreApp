@@ -1,8 +1,8 @@
 package di
 
-import presenter.products.viewmodel.ProductsViewModel
+import presenter.features.products.viewmodel.ProductsViewModel
 import org.koin.dsl.module
-import presenter.details.viewmodel.ProductDetailsViewModel
+import presenter.features.details.viewmodel.ProductDetailsViewModel
 
 val presentationModule = module {
 
@@ -12,9 +12,9 @@ val presentationModule = module {
 
     single {
         ProductDetailsViewModel(
-            productId = get(),
             getProductByIdUseCase = get(),
-            getProductsUseCase = get()
+            getProductsUseCase = get(),
+            savedStateHandle = get()
         )
     }
 

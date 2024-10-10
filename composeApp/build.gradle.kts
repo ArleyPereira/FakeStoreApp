@@ -1,3 +1,4 @@
+import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 import java.io.FileInputStream
 import java.util.Properties
 
@@ -5,16 +6,18 @@ plugins {
     alias(libs.plugins.kotlinMultiplatform)
     alias(libs.plugins.androidApplication)
     alias(libs.plugins.jetbrainsCompose)
+    alias(libs.plugins.compose.compiler)
     alias(libs.plugins.ksp)
-
-    kotlin("plugin.serialization") version "1.9.22"
+    alias(libs.plugins.kotlin.serialization)
 }
 
 kotlin {
     androidTarget {
         compilations.all {
-            kotlinOptions {
-                jvmTarget = "1.8"
+            compileTaskProvider.configure {
+                compilerOptions {
+                    jvmTarget.set(JvmTarget.JVM_1_8)
+                }
             }
         }
     }
@@ -33,16 +36,13 @@ kotlin {
     sourceSets {
         
         androidMain.dependencies {
-            implementation(libs.compose.ui.tooling.preview)
+            implementation(compose.preview)
             implementation(libs.androidx.activity.compose)
 
             // Ktor - Client network
             implementation(libs.ktor.client.android)
 
             // Koin - Inject dependency
-            implementation(project.dependencies.platform(libs.koin.bom))
-            implementation(libs.koin.core)
-            implementation(libs.koin.androidx.compose)
             implementation(libs.koin.android)
         }
 
@@ -52,11 +52,14 @@ kotlin {
         }
 
         commonMain.dependencies {
+            implementation(compose.components.uiToolingPreview)
             implementation(compose.runtime)
             implementation(compose.foundation)
-            implementation(compose.material) // Verificar se pode remover depois
             implementation(compose.material3)
             implementation(compose.ui)
+
+            // Navigation
+            implementation(libs.compose.navigation)
 
             // Resources
             implementation(compose.components.resources)
@@ -69,28 +72,18 @@ kotlin {
             implementation(libs.ktor.client.content.negotiation)
             implementation(libs.ktor.serialization.kotlinx.json)
 
-            implementation(libs.mvvm.core)
-
             // Kamel - Load image
             implementation(libs.kamel.image)
 
             // Koin - Inject dependency
-            implementation(project.dependencies.platform(libs.koin.bom))
             implementation(libs.koin.core)
             implementation(libs.koin.compose)
+            implementation(libs.koin.compose.viewmodel)
 
             // Kermit - Log
             implementation(libs.kermit)
-
-            // Voyager - Navigation
-            implementation(libs.voyager.navigator)
-            implementation(libs.voyager.transitions)
         }
     }
-}
-
-dependencies {
-    add("kspCommonMainMetadata", "io.insert-koin:koin-ksp-compiler:1.3.0")
 }
 
 val keystorePropertiesFile: File = rootProject.file("local.properties")
@@ -137,7 +130,7 @@ android {
         targetCompatibility = JavaVersion.VERSION_1_8
     }
     dependencies {
-        debugImplementation(libs.compose.ui.tooling)
+        debugImplementation(compose.uiTooling)
     }
 }
 
