@@ -23,6 +23,7 @@ ktorClientCore = "2.3.12"
 ksp = "2.0.20-1.0.24"
 koin = "4.0.0"
 compose-navigation = "2.8.0-alpha10"
+landscapist-coil = "2.4.0"
 
 [libraries]
 androidx-activity-compose = { module = "androidx.activity:activity-compose", version.ref = "androidx-activityCompose" }
@@ -48,8 +49,8 @@ koin-core = { module = "io.insert-koin:koin-core", version.ref = "koin" }
 koin-compose = { module = "io.insert-koin:koin-compose", version.ref = "koin" }
 koin-compose-viewmodel = { module = "io.insert-koin:koin-compose-viewmodel", version.ref = "koin" }
 
-# Loading Remote Image
-kamel-image = { module = "media.kamel:kamel-image", version.ref = "kamelImage" }
+# Landscapist
+landscapist-coil = { module = "com.github.skydoves:landscapist-coil3", version.ref = "landscapist-coil" }
 
 # Log
 kermit = { module = "co.touchlab:kermit", version.ref = "kermit" }

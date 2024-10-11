@@ -72,8 +72,8 @@ kotlin {
             implementation(libs.ktor.client.content.negotiation)
             implementation(libs.ktor.serialization.kotlinx.json)
 
-            // Kamel - Load image
-            implementation(libs.kamel.image)
+            // Landscapist
+            implementation(libs.landscapist.coil)
 
             // Koin - Inject dependency
             implementation(libs.koin.core)

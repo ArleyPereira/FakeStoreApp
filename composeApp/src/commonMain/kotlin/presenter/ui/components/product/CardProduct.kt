@@ -27,8 +27,6 @@ import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.FavoriteBorder
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
-import androidx.compose.material3.CircularProgressIndicator
-import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -50,8 +48,7 @@ import androidx.compose.ui.unit.IntSize
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import domain.model.Product
-import io.kamel.image.KamelImage
-import io.kamel.image.asyncPainterResource
+import presenter.ui.components.image.ImageUI
 
 @Composable
 fun CardProduct(
@@ -82,26 +79,11 @@ fun CardProduct(
                     .fillMaxWidth()
                     .clip(shape = RoundedCornerShape(12.dp))
             ) {
-                KamelImage(
-                    resource = asyncPainterResource(product.image.toString()),
-                    contentDescription = "Profile",
-                    onLoading = { progress ->
-                        Box(
-                            modifier = Modifier
-                                .fillMaxWidth()
-                                .height(140.dp)
-                                .clip(shape = RoundedCornerShape(12.dp))
-                        ) {
-                            CircularProgressIndicator(
-                                progress = { progress },
-                                modifier = Modifier
-                                    .align(Alignment.Center),
-                            )
-                        }
-                    },
-                    onFailure = { exception ->
-
-                    }
+                ImageUI(
+                    modifier = Modifier
+                        .size(90.dp),
+                    imageModel = product.image ?: "",
+                    onCLick = {}
                 )
 
                 Icon(
@@ -178,7 +160,6 @@ fun CardProduct(
 
 }
 
-@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun CardProductLoading(
     modifier: Modifier = Modifier

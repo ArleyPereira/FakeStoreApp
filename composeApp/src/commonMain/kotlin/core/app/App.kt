@@ -8,9 +8,7 @@ import org.koin.compose.KoinContext
 
 @Composable
 fun App() {
-    KoinContext {
-        MaterialTheme {
-            AppNavHost(navHostController = rememberNavController())
-        }
+    MaterialTheme {
+        AppNavHost(navHostController = rememberNavController())
     }
 }

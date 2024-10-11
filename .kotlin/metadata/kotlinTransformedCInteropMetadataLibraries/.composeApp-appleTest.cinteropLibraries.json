@@ -10,8 +10,13 @@
     "sourceSetName": "uikitMain"
   },
   {
-    "moduleId": "io.ktor:ktor-utils:2.3.12",
-    "file": "/Users/arleysantana/AndroidStudioProjects/Multiplatform/FakeStoreApp/.kotlin/metadata/kotlinTransformedCInteropMetadataLibraries/io.ktor-ktor-utils-2.3.12-iosMain-cinterop/io.ktor_ktor-utils-cinterop-threadUtils-TE4abA.klib",
+    "moduleId": "io.ktor:ktor-utils:3.0.0-rc-1",
+    "file": "/Users/arleysantana/AndroidStudioProjects/Multiplatform/FakeStoreApp/.kotlin/metadata/kotlinTransformedCInteropMetadataLibraries/io.ktor-ktor-utils-3.0.0-rc-1-iosMain-cinterop/io.ktor_ktor-utils-cinterop-threadUtils-Y_B_kg.klib",
+    "sourceSetName": "iosMain"
+  },
+  {
+    "moduleId": "io.ktor:ktor-io:3.0.0-rc-1",
+    "file": "/Users/arleysantana/AndroidStudioProjects/Multiplatform/FakeStoreApp/.kotlin/metadata/kotlinTransformedCInteropMetadataLibraries/io.ktor-ktor-io-3.0.0-rc-1-iosMain-cinterop/io.ktor_ktor-io-cinterop-mutex-DgrmRQ.klib",
     "sourceSetName": "iosMain"
   }
 ]

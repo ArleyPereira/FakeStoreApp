@@ -41,10 +41,6 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import domain.model.SizeProduct
-import io.kamel.core.Resource
-import io.kamel.core.getOrNull
-import io.kamel.image.asyncPainterResource
-import org.koin.compose.koinInject
 import org.koin.compose.viewmodel.koinViewModel
 import presenter.features.details.action.ProductDetailsAction
 import presenter.features.details.state.ProductDetailsState
@@ -82,100 +78,96 @@ private fun ProductDetailsContent(
             .verticalScroll(rememberScrollState())
             .background(Color.White)
     ) {
-        val painterResource: Resource<Painter> =
-            asyncPainterResource(state.product?.image.toString())
-        painterResource.getOrNull()?.let { painter ->
-            Box(
-                modifier = Modifier
-                    .fillMaxWidth()
-            ) {
-                Image(
-                    painter = painter,
-                    contentDescription = "",
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .height(350.dp)
-                        .background(Color.Black),
-                    contentScale = ContentScale.Crop
-                )
-
-                Icon(
-                    imageVector = Icons.AutoMirrored.Filled.ArrowBack,
-                    contentDescription = "back",
-                    modifier = Modifier
-                        .align(Alignment.TopStart)
-                        .padding(12.dp)
-                        .border(
-                            width = 1.dp,
-                            color = Color.Black.copy(alpha = 0.05f),
-                            shape = RoundedCornerShape(5.dp)
-                        )
-                        .padding(8.dp)
-                        .clickable { onBackPressed() }
-                )
-
-                Row(
-                    modifier = Modifier
-                        .wrapContentSize()
-                        .padding(8.dp)
-                        .align(Alignment.BottomCenter),
-                    verticalAlignment = Alignment.CenterVertically,
-                    horizontalArrangement = Arrangement.spacedBy(8.dp)
-                ) {
-                    Image(
-                        painter = painter,
-                        contentDescription = "",
-                        modifier = Modifier
-                            .height(40.dp)
-                            .width(50.dp)
-                            .border(
-                                width = 1.dp,
-                                color = Color(0xFFFC6E20),
-                                shape = RoundedCornerShape(12.dp)
-                            )
-                    )
-
-                    Image(
-                        painter = painter,
-                        contentDescription = "",
-                        modifier = Modifier
-                            .height(40.dp)
-                            .width(50.dp)
-                            .border(
-                                width = 1.dp,
-                                color = Color(0xFFFC6E20),
-                                shape = RoundedCornerShape(12.dp)
-                            )
-                    )
-
-                    Image(
-                        painter = painter,
-                        contentDescription = "",
-                        modifier = Modifier
-                            .height(40.dp)
-                            .width(50.dp)
-                            .border(
-                                width = 1.dp,
-                                color = Color(0xFFFC6E20),
-                                shape = RoundedCornerShape(12.dp)
-                            )
-                    )
-
-                    Image(
-                        painter = painter,
-                        contentDescription = "",
-                        modifier = Modifier
-                            .height(40.dp)
-                            .width(50.dp)
-                            .border(
-                                width = 1.dp,
-                                color = Color(0xFFFC6E20),
-                                shape = RoundedCornerShape(12.dp)
-                            )
-                    )
-                }
-            }
-        }
+//        Box(
+//            modifier = Modifier
+//                .fillMaxWidth()
+//        ) {
+//            Image(
+//                painter = painter,
+//                contentDescription = "",
+//                modifier = Modifier
+//                    .fillMaxWidth()
+//                    .height(350.dp)
+//                    .background(Color.Black),
+//                contentScale = ContentScale.Crop
+//            )
+//
+//            Icon(
+//                imageVector = Icons.AutoMirrored.Filled.ArrowBack,
+//                contentDescription = "back",
+//                modifier = Modifier
+//                    .align(Alignment.TopStart)
+//                    .padding(12.dp)
+//                    .border(
+//                        width = 1.dp,
+//                        color = Color.Black.copy(alpha = 0.05f),
+//                        shape = RoundedCornerShape(5.dp)
+//                    )
+//                    .padding(8.dp)
+//                    .clickable { onBackPressed() }
+//            )
+//
+//            Row(
+//                modifier = Modifier
+//                    .wrapContentSize()
+//                    .padding(8.dp)
+//                    .align(Alignment.BottomCenter),
+//                verticalAlignment = Alignment.CenterVertically,
+//                horizontalArrangement = Arrangement.spacedBy(8.dp)
+//            ) {
+//                Image(
+//                    painter = painter,
+//                    contentDescription = "",
+//                    modifier = Modifier
+//                        .height(40.dp)
+//                        .width(50.dp)
+//                        .border(
+//                            width = 1.dp,
+//                            color = Color(0xFFFC6E20),
+//                            shape = RoundedCornerShape(12.dp)
+//                        )
+//                )
+//
+//                Image(
+//                    painter = painter,
+//                    contentDescription = "",
+//                    modifier = Modifier
+//                        .height(40.dp)
+//                        .width(50.dp)
+//                        .border(
+//                            width = 1.dp,
+//                            color = Color(0xFFFC6E20),
+//                            shape = RoundedCornerShape(12.dp)
+//                        )
+//                )
+//
+//                Image(
+//                    painter = painter,
+//                    contentDescription = "",
+//                    modifier = Modifier
+//                        .height(40.dp)
+//                        .width(50.dp)
+//                        .border(
+//                            width = 1.dp,
+//                            color = Color(0xFFFC6E20),
+//                            shape = RoundedCornerShape(12.dp)
+//                        )
+//                )
+//
+//                Image(
+//                    painter = painter,
+//                    contentDescription = "",
+//                    modifier = Modifier
+//                        .height(40.dp)
+//                        .width(50.dp)
+//                        .border(
+//                            width = 1.dp,
+//                            color = Color(0xFFFC6E20),
+//                            shape = RoundedCornerShape(12.dp)
+//                        )
+//                )
+//            }
+//        }
 
         Text(
             text = (state.product?.title ?: "").uppercase(),
