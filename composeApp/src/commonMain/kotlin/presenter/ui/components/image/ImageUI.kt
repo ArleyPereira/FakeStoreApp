@@ -1,18 +1,27 @@
 package presenter.ui.components.image
 
 import androidx.compose.foundation.BorderStroke
+import androidx.compose.foundation.border
+import androidx.compose.foundation.clickable
+import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.Shape
 import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.unit.dp
+import com.skydoves.landscapist.ImageOptions
+import com.skydoves.landscapist.coil3.CoilImage
 import org.jetbrains.compose.ui.tooling.preview.Preview
 
 @Composable
@@ -23,33 +32,36 @@ fun ImageUI(
     shape: Shape = RoundedCornerShape(12.dp),
     borderStroke: BorderStroke = BorderStroke(0.dp, Color.Transparent),
     contentScale: ContentScale = ContentScale.Crop,
-    onCLick: () -> Unit
+    onClick: () -> Unit
 ) {
-//    CoilImage(
-//        imageModel = { imageModel },
-//        modifier = modifier
-//            .clip(shape = shape)
-//            .clickable { onCLick() }
-//            .border(border = borderStroke, shape = shape),
-//        imageOptions = ImageOptions(
-//            contentScale = contentScale
-//        ),
-//        previewPlaceholder = previewPlaceholder,
-//        loading = {
-//            Box(
-//                modifier = Modifier
-//                    .fillMaxSize()
-//            ) {
-//                CircularProgressIndicator(
-//                    modifier = Modifier
-//                        .align(Alignment.Center)
-//                )
-//            }
-//        },
-//        failure = {
-//
-//        }
-//    )
+    CoilImage(
+        imageModel = { imageModel },
+        modifier = modifier
+            .clip(shape = shape)
+            .clickable(
+                indication = null,
+                interactionSource = remember { MutableInteractionSource() }
+            ) { onClick() }
+            .border(border = borderStroke, shape = shape),
+        imageOptions = ImageOptions(
+            contentScale = contentScale
+        ),
+        previewPlaceholder = previewPlaceholder,
+        loading = {
+            Box(
+                modifier = Modifier
+                    .fillMaxSize()
+            ) {
+                CircularProgressIndicator(
+                    modifier = Modifier
+                        .align(Alignment.Center)
+                )
+            }
+        },
+        failure = {
+
+        }
+    )
 }
 
 @Preview

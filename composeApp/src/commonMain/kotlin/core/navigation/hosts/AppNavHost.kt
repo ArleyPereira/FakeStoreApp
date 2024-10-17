@@ -11,9 +11,12 @@ import presenter.features.details.screen.ProductDetailsScreen
 import presenter.features.products.screen.ProductsScreen
 
 @Composable
-fun AppNavHost(navHostController: NavHostController) {
+fun AppNavHost(
+    modifier: Modifier = Modifier,
+    navHostController: NavHostController
+) {
     NavHost(
-        modifier = Modifier,
+        modifier = modifier,
         navController = navHostController,
         startDestination = AppRoutes.Home
     ) {
@@ -21,12 +24,18 @@ fun AppNavHost(navHostController: NavHostController) {
             ProductsScreen(
                 navigateToProductDetails = { id ->
                     navHostController.navigate(AppRoutes.ProductDetails(id))
+                },
+                navigateToCart = {
+                    navHostController.navigate(AppRoutes.Cart)
                 }
             )
         }
 
         composable<AppRoutes.ProductDetails> {
             ProductDetailsScreen(
+                navigateToCartScreen = {
+                    navHostController.navigate(AppRoutes.Cart)
+                },
                 onBackPressed = {
                     navHostController.popBackStack()
                 }
@@ -34,7 +43,11 @@ fun AppNavHost(navHostController: NavHostController) {
         }
 
         composable<AppRoutes.Cart> {
-            CartScreen()
+            CartScreen(
+                onBackPressed = {
+                    navHostController.popBackStack()
+                }
+            )
         }
     }
 }
