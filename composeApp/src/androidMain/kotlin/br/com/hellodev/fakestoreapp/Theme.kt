@@ -5,12 +5,12 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.darkColorScheme
 import androidx.compose.material3.lightColorScheme
 import androidx.compose.runtime.Composable
-import presenter.ui.theme.Pink40
-import presenter.ui.theme.Pink80
-import presenter.ui.theme.Purple40
-import presenter.ui.theme.Purple80
-import presenter.ui.theme.PurpleGrey40
-import presenter.ui.theme.PurpleGrey80
+import br.com.hellodev.fakestoreapp.presenter.ui.theme.Pink40
+import br.com.hellodev.fakestoreapp.presenter.ui.theme.Pink80
+import br.com.hellodev.fakestoreapp.presenter.ui.theme.Purple40
+import br.com.hellodev.fakestoreapp.presenter.ui.theme.Purple80
+import br.com.hellodev.fakestoreapp.presenter.ui.theme.PurpleGrey40
+import br.com.hellodev.fakestoreapp.presenter.ui.theme.PurpleGrey80
 
 private val DarkColorScheme = darkColorScheme(
     primary = Purple80,

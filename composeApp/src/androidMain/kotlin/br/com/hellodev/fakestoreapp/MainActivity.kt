@@ -1,6 +1,6 @@
 package br.com.hellodev.fakestoreapp
 
-import core.app.App
+import br.com.hellodev.fakestoreapp.core.app.App
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
