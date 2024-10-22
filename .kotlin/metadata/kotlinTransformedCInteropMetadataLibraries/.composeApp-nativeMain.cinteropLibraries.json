@@ -1,17 +1,32 @@
 [
   {
+    "moduleId": "androidx.sqlite:sqlite-bundled:2.5.0-alpha10",
+    "file": "/Users/arleysantana/AndroidStudioProjects/Multiplatform/FakeStoreApp/.kotlin/metadata/kotlinTransformedCInteropMetadataLibraries/androidx.sqlite-sqlite-bundled-2.5.0-alpha10-nativeMain-cinterop/androidx.sqlite_sqlite-bundled-cinterop-androidXBundledSqlite-9SUhcQ.klib",
+    "sourceSetName": "nativeMain"
+  },
+  {
     "moduleId": "org.jetbrains.kotlinx:atomicfu:0.23.2",
     "file": "/Users/arleysantana/AndroidStudioProjects/Multiplatform/FakeStoreApp/.kotlin/metadata/kotlinTransformedCInteropMetadataLibraries/org.jetbrains.kotlinx-atomicfu-0.23.2-nativeMain-cinterop/org.jetbrains.kotlinx_atomicfu-cinterop-interop-yBS35w.klib",
     "sourceSetName": "nativeMain"
   },
   {
-    "moduleId": "org.jetbrains.compose.ui:ui-uikit:1.7.0-beta02",
-    "file": "/Users/arleysantana/AndroidStudioProjects/Multiplatform/FakeStoreApp/.kotlin/metadata/kotlinTransformedCInteropMetadataLibraries/org.jetbrains.compose.ui-ui-uikit-1.7.0-beta02-uikitMain-cinterop/org.jetbrains.compose.ui_ui-uikit-cinterop-utils-aNVDjg.klib",
+    "moduleId": "org.jetbrains.compose.ui:ui-uikit:1.7.0",
+    "file": "/Users/arleysantana/AndroidStudioProjects/Multiplatform/FakeStoreApp/.kotlin/metadata/kotlinTransformedCInteropMetadataLibraries/org.jetbrains.compose.ui-ui-uikit-1.7.0-uikitMain-cinterop/org.jetbrains.compose.ui_ui-uikit-cinterop-utils-aNVDjg.klib",
     "sourceSetName": "uikitMain"
   },
   {
-    "moduleId": "io.ktor:ktor-utils:2.3.12",
-    "file": "/Users/arleysantana/AndroidStudioProjects/Multiplatform/FakeStoreApp/.kotlin/metadata/kotlinTransformedCInteropMetadataLibraries/io.ktor-ktor-utils-2.3.12-iosMain-cinterop/io.ktor_ktor-utils-cinterop-threadUtils-TE4abA.klib",
+    "moduleId": "androidx.sqlite:sqlite-framework:2.5.0-alpha10",
+    "file": "/Users/arleysantana/AndroidStudioProjects/Multiplatform/FakeStoreApp/.kotlin/metadata/kotlinTransformedCInteropMetadataLibraries/androidx.sqlite-sqlite-framework-2.5.0-alpha10-nativeMain-cinterop/androidx.sqlite_sqlite-framework-cinterop-sqlite3-L7IQWQ.klib",
+    "sourceSetName": "nativeMain"
+  },
+  {
+    "moduleId": "io.ktor:ktor-utils:3.0.0",
+    "file": "/Users/arleysantana/AndroidStudioProjects/Multiplatform/FakeStoreApp/.kotlin/metadata/kotlinTransformedCInteropMetadataLibraries/io.ktor-ktor-utils-3.0.0-iosMain-cinterop/io.ktor_ktor-utils-cinterop-threadUtils-Y_B_kg.klib",
+    "sourceSetName": "iosMain"
+  },
+  {
+    "moduleId": "io.ktor:ktor-io:3.0.0",
+    "file": "/Users/arleysantana/AndroidStudioProjects/Multiplatform/FakeStoreApp/.kotlin/metadata/kotlinTransformedCInteropMetadataLibraries/io.ktor-ktor-io-3.0.0-iosMain-cinterop/io.ktor_ktor-io-cinterop-mutex-qJy_EQ.klib",
     "sourceSetName": "iosMain"
   }
 ]
