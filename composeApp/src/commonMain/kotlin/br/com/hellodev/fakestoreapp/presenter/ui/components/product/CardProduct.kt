@@ -74,42 +74,12 @@ fun CardProduct(
             verticalArrangement = Arrangement.SpaceBetween,
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
-            Box(
+            ImageUI(
                 modifier = Modifier
                     .fillMaxWidth()
-            ) {
-                ImageUI(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .height(140.dp)
-                        .align(Alignment.Center),
-                    imageModel = product.image ?: ""
-                )
-
-                ProductQuantityUI(
-                    modifier = Modifier
-                        .padding(8.dp)
-                        .align(Alignment.BottomEnd),
-                    onIncrementClick = {},
-                    onDecrementClick = {}
-                )
-
-//                Image(
-//                    painter = painterResource(Res.drawable.ic_add),
-//                    contentDescription = "",
-//                    modifier = Modifier
-//                        .padding(8.dp)
-//                        .clip(CircleShape)
-//                        .background(Color.White)
-//                        .padding(4.dp)
-//                        .size(20.dp)
-//                        .clickable(
-//                            indication = null,
-//                            interactionSource = remember { MutableInteractionSource() }
-//                        ) {}
-//                        .align(Alignment.BottomEnd)
-//                )
-            }
+                    .height(140.dp),
+                imageModel = product.image ?: ""
+            )
 
             Spacer(modifier = Modifier.height(8.dp))
 

@@ -1,4 +1,4 @@
-package br.com.hellodev.fakestoreapp.presenter.features.products.viewmodel
+package br.com.hellodev.fakestoreapp.presenter.features.home.viewmodel
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -8,27 +8,27 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
-import br.com.hellodev.fakestoreapp.presenter.features.products.action.ProductsAction
-import br.com.hellodev.fakestoreapp.presenter.features.products.state.ProductsState
+import br.com.hellodev.fakestoreapp.presenter.features.home.action.HomeAction
+import br.com.hellodev.fakestoreapp.presenter.features.home.state.HomeState
 
-class ProductsViewModel(
+class HomeViewModel(
     private val getProductsUseCase: GetProductsUseCase
 ) : ViewModel() {
 
-    private var _state = MutableStateFlow(ProductsState())
-    var state: StateFlow<ProductsState> = _state
+    private var _state = MutableStateFlow(HomeState())
+    var state: StateFlow<HomeState> = _state
 
     init {
         getProducts()
     }
 
-    fun dispatchAction(action: ProductsAction) {
+    fun dispatchAction(action: HomeAction) {
         when (action) {
-            is ProductsAction.SearchProduct -> {
+            is HomeAction.SearchProduct -> {
                 searchProduct(search = action.search)
             }
 
-            ProductsAction.GetAllProducts -> {
+            HomeAction.GetAllHome -> {
                 getProducts()
             }
         }
@@ -39,7 +39,8 @@ class ProductsViewModel(
             getProductsUseCase().collectLatest { products ->
                 _state.value = _state.value.copy(
                     isLoading = false,
-                    products = products.map { it.toDomain() }
+                    products = products.map { it.toDomain() },
+                    categories = getCategories()
                 )
             }
         }
@@ -53,6 +54,20 @@ class ProductsViewModel(
                 products = result
             )
         }
+    }
+
+    private fun getCategories(): List<String> {
+        return listOf(
+            "Todos",
+            "Masculino",
+            "Feminino",
+            "Infantil",
+            "Cançados",
+            "Roupas",
+            "Suplementos",
+            "Games",
+            "Equipamentos"
+        )
     }
 
 }

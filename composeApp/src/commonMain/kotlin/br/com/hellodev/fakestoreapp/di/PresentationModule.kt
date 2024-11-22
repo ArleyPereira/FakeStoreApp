@@ -1,13 +1,13 @@
 package br.com.hellodev.fakestoreapp.di
 
-import br.com.hellodev.fakestoreapp.presenter.features.products.viewmodel.ProductsViewModel
+import br.com.hellodev.fakestoreapp.presenter.features.home.viewmodel.HomeViewModel
 import org.koin.dsl.module
 import br.com.hellodev.fakestoreapp.presenter.features.details.viewmodel.ProductDetailsViewModel
 
 val presentationModule = module {
 
     single {
-        ProductsViewModel(getProductsUseCase = get())
+        HomeViewModel(getProductsUseCase = get())
     }
 
     single {

@@ -4,6 +4,7 @@ import br.com.hellodev.fakestoreapp.data.model.ProductResponse
 import br.com.hellodev.fakestoreapp.domain.repository.HomeRepository
 import io.ktor.client.HttpClient
 import io.ktor.client.request.get
+import io.ktor.client.statement.bodyAsText
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 import kotlinx.serialization.json.Json
@@ -15,7 +16,7 @@ class HomeRepositoryImpl(
     override suspend fun getProducts(): Flow<List<ProductResponse>> {
         return try {
             val response = httpClient.get("https://fakestoreapi.com/products")
-            val responseBody: String = products()//response.bodyAsText()
+            val responseBody: String = response.bodyAsText()
             val products = Json.decodeFromString<List<ProductResponse>>(responseBody)
             flow { emit(products) }
         } catch (exception: Exception) {

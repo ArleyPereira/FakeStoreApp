@@ -30,6 +30,7 @@ import org.jetbrains.compose.ui.tooling.preview.Preview
 @Composable
 fun CategoryTagItemUI(
     modifier: Modifier = Modifier,
+    category: String,
     isChecked: Boolean,
     onClick: () -> Unit
 ) {
@@ -89,7 +90,7 @@ fun CategoryTagItemUI(
             }
 
             Text(
-                text = "Games",
+                text = category,
                 style = TextStyle(
                     fontSize = 12.sp,
                     lineHeight = 14.4.sp,

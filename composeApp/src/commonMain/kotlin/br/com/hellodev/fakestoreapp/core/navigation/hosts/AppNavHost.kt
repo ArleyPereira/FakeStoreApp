@@ -8,7 +8,7 @@ import androidx.navigation.compose.composable
 import br.com.hellodev.fakestoreapp.core.navigation.routes.AppRoutes
 import br.com.hellodev.fakestoreapp.presenter.features.cart.screen.CartScreen
 import br.com.hellodev.fakestoreapp.presenter.features.details.screen.ProductDetailsScreen
-import br.com.hellodev.fakestoreapp.presenter.features.products.screen.ProductsScreen
+import br.com.hellodev.fakestoreapp.presenter.features.home.screen.HomeScreen
 
 @Composable
 fun AppNavHost(
@@ -21,7 +21,7 @@ fun AppNavHost(
         startDestination = AppRoutes.Home
     ) {
         composable<AppRoutes.Home> {
-            ProductsScreen(
+            HomeScreen(
                 navigateToProductDetails = { id ->
                     navHostController.navigate(AppRoutes.ProductDetails(id))
                 },

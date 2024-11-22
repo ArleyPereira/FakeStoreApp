@@ -1,4 +1,4 @@
-package br.com.hellodev.fakestoreapp.presenter.features.products.screen
+package br.com.hellodev.fakestoreapp.presenter.features.home.screen
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
@@ -9,6 +9,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyRow
+import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.material3.CenterAlignedTopAppBar
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
@@ -17,7 +18,6 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -31,26 +31,29 @@ import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import br.com.hellodev.fakestoreapp.presenter.features.home.action.HomeAction
+import br.com.hellodev.fakestoreapp.presenter.features.home.state.HomeState
+import br.com.hellodev.fakestoreapp.presenter.features.home.viewmodel.HomeViewModel
+import br.com.hellodev.fakestoreapp.presenter.ui.components.category.CategoryItemUI
+import br.com.hellodev.fakestoreapp.presenter.ui.components.category.CategoryTagItemUI
 import fakestoreapp.composeapp.generated.resources.Res
 import fakestoreapp.composeapp.generated.resources.banner
 import fakestoreapp.composeapp.generated.resources.ic_cart
 import fakestoreapp.composeapp.generated.resources.ic_search
 import org.jetbrains.compose.resources.painterResource
+import org.jetbrains.compose.ui.tooling.preview.Preview
 import org.koin.compose.viewmodel.koinViewModel
-import br.com.hellodev.fakestoreapp.presenter.features.products.action.ProductsAction
-import br.com.hellodev.fakestoreapp.presenter.features.products.state.ProductsState
-import br.com.hellodev.fakestoreapp.presenter.features.products.viewmodel.ProductsViewModel
-import br.com.hellodev.fakestoreapp.presenter.ui.components.category.CategoryItemUI
-import br.com.hellodev.fakestoreapp.presenter.ui.components.category.CategoryTagItemUI
 
 @Composable
-fun ProductsScreen(
+fun HomeScreen(
     navigateToProductDetails: (Int) -> Unit,
     navigateToCart: () -> Unit
 ) {
-    val viewModel = koinViewModel<ProductsViewModel>()
-    val state = viewModel.state.collectAsState().value
-    ProductsContent(
+    val viewModel = koinViewModel<HomeViewModel>()
+    val state by viewModel.state.collectAsStateWithLifecycle()
+
+    HomeContent(
         state = state,
         action = {
             viewModel.dispatchAction(it)
@@ -62,9 +65,9 @@ fun ProductsScreen(
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-private fun ProductsContent(
-    state: ProductsState,
-    action: (ProductsAction) -> Unit,
+private fun HomeContent(
+    state: HomeState,
+    action: (HomeAction) -> Unit,
     navigateToProductDetails: (Int) -> Unit,
     navigateToCart: () -> Unit
 ) {
@@ -153,11 +156,12 @@ private fun ProductsContent(
                         contentPadding = PaddingValues(horizontal = 16.dp),
                         horizontalArrangement = Arrangement.spacedBy(8.dp)
                     ) {
-                        items(10) {
+                        itemsIndexed(state.categories ?: emptyList()) { index, category ->
                             CategoryTagItemUI(
-                                isChecked = it == 0,
+                                category = category,
+                                isChecked = index == categoryPosition,
                                 onClick = {
-
+                                    categoryPosition = index
                                 }
                             )
                         }
@@ -176,7 +180,13 @@ private fun ProductsContent(
 
 }
 
+@Preview
 @Composable
 private fun ProductsPreview() {
-
+    HomeContent(
+        state = HomeState(),
+        action = {},
+        navigateToProductDetails = {},
+        navigateToCart = {}
+    )
 }
